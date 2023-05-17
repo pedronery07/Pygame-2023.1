@@ -36,9 +36,9 @@ def game_intro():
                 quit()
             
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_c:
+                if event.key == pygame.K_RETURN:
                     intro = False
-                if event.key == pygame.K_q:
+                if event.key == pygame.K_SPACE:
                     pygame.quit()
                     quit()
 
