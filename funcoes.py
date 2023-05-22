@@ -1,6 +1,7 @@
 import pygame
 import time
-from config import WIDTH, HEIGHT, cores, background_color, title_font, txt_font
+import random
+from config import WIDTH, HEIGHT, cores, background_color, title_font, txt_font, formas
 from assets import theme_song
 
 gameDisplay = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -55,4 +56,29 @@ def game_intro():
 
         pygame.display.update()
         clock.tick(5)
+
+#Funções que criam o grid do jogo
+def cria_grid(posicao_fixa = {}):
+    grid = []
+    for a in range(20):
+        linha = []
+        for b in range(10):
+            bloco = (0,0,0)
+            linha.append(bloco)
+        grid.append(linha)
+    
+    for i in range(len(grid)):
+        for j in range(len(grid[i])):
+            if (j, i) in posicao_fixa:
+                c = posicao_fixa[(j, i)]
+                grid[i][j] = c
+    
+    return grid
+
+def seleciona_forma():
+    escolha = random.choice(formas)
+    return escolha
+
+def desenha_grid(superficie):
+    superficie.fill(background_color)
 
