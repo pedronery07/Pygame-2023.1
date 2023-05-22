@@ -119,8 +119,8 @@ T = [['.....',
          '..0..',
          '.....']]
 
-shapes = [S, Z, I, O, J, L, T]
-shapes_colors = [cores['VD'], cores['VM'], cores['C'], cores['AM'], cores['L'], cores['AZ'], cores['R']]
+formas = [S, Z, I, O, J, L, T]
+formas_cores = [cores['VD'], cores['VM'], cores['C'], cores['AM'], cores['L'], cores['AZ'], cores['R']]
 
 FPS = 15
 
