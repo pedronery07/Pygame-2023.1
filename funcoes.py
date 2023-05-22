@@ -151,6 +151,14 @@ def valida_posicao(forma, grid):
     
     return True
 
+def valida_altura(pos_validas):
+    for p in pos_validas:
+        x,y = p
+        if y < 1:
+            return True
+        else:
+            return False
+
 def principal():
 
     posicao_fixa = {}
@@ -163,8 +171,20 @@ def principal():
     proxima_peça = seleciona_forma()
     relogio = pygame.time.Clock()
     queda = 0 
+    velocidade_de_queda = 0.27
 
     while jogo_aberto:
+        grid = cria_grid(posicao_fixa)
+        queda += clock.get_rawtime()
+        clock.tick()
+
+        if queda/1000 > velocidade_de_queda:
+            queda = 0
+            peça.y += 1
+            if not(valida_posicao(peça,grid)) and peça.y > 0:
+                peça.y -= 1
+                muda_peça = True
+
         for e in pygame.event.get():
             if e.type == pygame.QUIT:
                 jogo_aberto = False
