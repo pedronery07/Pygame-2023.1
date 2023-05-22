@@ -83,7 +83,15 @@ def seleciona_forma():
     return escolha
 
 def desenha_grid(superficie, grid):
-    pass
+    x0 = topo_esquerdo_x
+    y0 = topo_esquerdo_y
+
+    for i in range(len(grid)):
+        #20 colunas
+        pygame.draw.line(superficie, cores['CI'], (x0, y0+i*tam_bloco), (x0 + play_width, y0+i*tam_bloco))
+        for j in range(len(grid[i])):
+            #10 linhas
+            pygame.draw.line(superficie, cores['CI'], (x0 + j*tam_bloco, y0), (x0 + j*tam_bloco, y0+ play_width, play_height))
 
 def desenha_janela(superficie,grid):
     superficie.fill(background_color)
