@@ -57,9 +57,6 @@ def game_intro():
         pygame.display.update()
         clock.tick(5)
 
-def valida_posicao():
-    pass
-
 #Funções que criam o grid do jogo
 def cria_grid(posicao_fixa = {}):
     grid = []
@@ -110,7 +107,49 @@ def desenha_janela(superficie,grid):
 
     desenha_grid(superficie,grid)
 
-    pygame.display.update()
+    pygame.display.update()              
+
+def converte_forma(forma):
+    posicoes = []
+    formato = forma.forma[forma.rotation % len(forma.forma)]
+
+    for i, line in enumerate(formato):
+        linha = list(line)
+        for j, column in enumerate(linha):
+            if column == '0':
+                posicoes.append((forma.x + j, forma.y + i))
+
+    for i, pos in enumerate(posicoes):
+        posicoes[i] = (pos[0] - 2, pos[1] - 4)
+
+def valida_posicao(forma, grid):
+    pos_validas = []
+    for i in range(20):
+        for j in range(10):
+            # Uma peça não pode ocupar o espaço de outra
+            # Para a posição ser válida, a cor da posição deve ser igual à cor do background(preta)
+            if grid[i][j] == background_color:
+                pos_validas.append((j, i))
+    
+    # Converte as posições válidas de listas com sublistas em listas sem sublistas
+    # Exemplo: [[(0, 1)], [(2, 3)], [(4, 5)]] -> [(0, 1), (2, 3), (4, 5)] 
+    pos_validas_sem_sublistas = []
+    for sublist in pos_validas:
+        for item in sublist:
+            pos_validas_sem_sublistas.append(item)
+    pos_validas = pos_validas_sem_sublistas
+
+    formatado = converte_forma(forma)
+
+    for pos in formatado:
+        if pos not in pos_validas:
+            # Formatos nascem fora da tela (posição negativa)
+            # É necessário checar quando a peça for visível ao jogador e, então, pos[1] > -1 
+            if pos[1] > -1:
+                # Retorna Falso quando o jogador tentar ultrapassar os limites laterais da tela
+                return False
+    
+    return True
 
 def principal():
 
@@ -146,24 +185,10 @@ def principal():
                     peça.rotação += 1
                     if not(valida_posicao(peça,grid)):
                         peça -= 1
-        desenha_janela(win,grid)              
-
+        desenha_janela(win,grid)
 
 def menu_principal(win):
     principal(win)
 win = pygame.display.set_mode((s_width, s_height))
 pygame.display.set_caption('Tetris')
 menu_principal(win)
-
-def converte_forma(forma):
-    posicoes = []
-    formato = forma.forma[forma.rotation % len(forma.forma)]
-
-    for i, line in enumerate(formato):
-        linha = list(line)
-        for j, column in enumerate(linha):
-            if column == '0':
-                posicoes.append((forma.x + j, forma.y + i))
-
-    for i, pos in enumerate(posicoes):
-        posicoes[i] = (pos[0] - 2, pos[1] - 4)
