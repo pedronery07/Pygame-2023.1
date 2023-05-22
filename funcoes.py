@@ -154,3 +154,16 @@ def menu_principal(win):
 win = pygame.display.set_mode((s_width, s_height))
 pygame.display.set_caption('Tetris')
 menu_principal(win)
+
+def converte_forma(forma):
+    posicoes = []
+    formato = forma.forma[forma.rotation % len(forma.forma)]
+
+    for i, line in enumerate(formato):
+        linha = list(line)
+        for j, column in enumerate(linha):
+            if column == '0':
+                posicoes.append((forma.x + j, forma.y + i))
+
+    for i, pos in enumerate(posicoes):
+        posicoes[i] = (pos[0] - 2, pos[1] - 4)
