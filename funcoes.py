@@ -1,7 +1,7 @@
 import pygame
 import time
 import random
-from config import WIDTH, HEIGHT, cores, background_color, title_font, txt_font, formas
+from config import WIDTH, HEIGHT, cores, background_color, title_font, txt_font, formas,topo_esquerdo_x,topo_esquerdo_y,play_height,play_width,tam_bloco
 from assets import theme_song
 
 gameDisplay = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -79,6 +79,9 @@ def seleciona_forma():
     escolha = random.choice(formas)
     return escolha
 
-def desenha_grid(superficie):
-    superficie.fill(background_color)
+def desenha_grid(superficie, grid):
+    for i in range(len(grid)):
+        for j in range(len(grid[i])):
+            pygame.draw.rect(superficie, grid[i][j], (topo_esquerdo_x + j*tam_bloco, topo_esquerdo_y + i*tam_bloco, tam_bloco, tam_bloco), 0)
 
+    pygame.draw.rect(superficie, (255,0,0), (topo_esquerdo_x, topo_esquerdo_y, play_width, play_height), 4)
