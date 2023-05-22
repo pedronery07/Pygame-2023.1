@@ -205,7 +205,29 @@ def principal():
                     peça.rotação += 1
                     if not(valida_posicao(peça,grid)):
                         peça -= 1
+        
+                
+        forma_pos = converte_forma(peça)
+
+        for i in range(len(forma_pos)):
+            x, y = forma_pos[i]
+            if y > -1:
+                grid[y][x] = peça.color
+        
+        if muda_peça:
+            for pos in forma_pos:
+                p = (pos[0], pos[1])
+                posicao_fixa[p] = peça.color
+            peça = proxima_peça
+            proxima_peça = seleciona_forma
+            muda_peça = False
+
         desenha_janela(win,grid)
+
+        if valida_altura(posicao_fixa):
+            jogo_aberto = False
+    
+    pygame.display.quit()
 
 def menu_principal(win):
     principal(win)
