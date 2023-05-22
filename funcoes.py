@@ -1,7 +1,7 @@
 import pygame
 import time
 import random
-from config import WIDTH, HEIGHT, cores, background_color, title_font, txt_font, formas,topo_esquerdo_x,topo_esquerdo_y,play_height,play_width,tam_bloco
+from config import WIDTH, HEIGHT, cores, background_color, title_font, txt_font, formas,topo_esquerdo_x,topo_esquerdo_y,play_height,play_width,tam_bloco, Peça 
 from assets import theme_song
 
 gameDisplay = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -57,6 +57,9 @@ def game_intro():
         pygame.display.update()
         clock.tick(5)
 
+def valida_posicao():
+    pass
+
 #Funções que criam o grid do jogo
 def cria_grid(posicao_fixa = {}):
     grid = []
@@ -76,12 +79,59 @@ def cria_grid(posicao_fixa = {}):
     return grid
 
 def seleciona_forma():
-    escolha = random.choice(formas)
+    escolha = Peça(5,0,random.choice(formas))
     return escolha
 
 def desenha_grid(superficie, grid):
+    pass
+
+def desenha_janela(superficie,grid):
+    superficie.fill(background_color)
+    
+    pygame.font.init()
+    
+    titulo = title_font.render('Tetris',1,(255,255,255))
+
+    superficie.blit(titulo,(topo_esquerdo_x + play_width/2 - titulo.get_width()/2,30))
+
     for i in range(len(grid)):
         for j in range(len(grid[i])):
             pygame.draw.rect(superficie, grid[i][j], (topo_esquerdo_x + j*tam_bloco, topo_esquerdo_y + i*tam_bloco, tam_bloco, tam_bloco), 0)
 
     pygame.draw.rect(superficie, (255,0,0), (topo_esquerdo_x, topo_esquerdo_y, play_width, play_height), 4)
+
+    desenha_grid(superficie,grid)
+
+    pygame.display.update()
+
+def principal():
+
+    posicao_fixa = {}
+
+    grid = cria_grid(posicao_fixa)
+
+    muda_peça = False
+    jogo_aberto = True
+    peça = seleciona_forma()
+    proxima_peça = seleciona_forma()
+    relogio = pygame.time.Clock()
+    queda = 0 
+
+    while jogo_aberto:
+        for e in pygame.event.get():
+            if e.type == pygame.QUIT:
+                jogo_aberto = False
+            if e.type == pygame.KEYDOWN:
+                if e.key == pygame.K_LEFT:
+                    peça.x -= 1
+                    if not(valida_posicao(peça,grid)):
+                        peça.x += 1
+                if e.key == pygame.K_RIGHT:
+                    peça.x += 1
+                    if not (valida_posicao()):
+                        peça.x -= 1
+                if e.key == pygame.K_DOWN:
+                    peça.y -= 1
+                if e.key == pygame.K_UP:
+                    peça.rotação += 1
+
