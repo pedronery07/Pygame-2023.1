@@ -120,7 +120,16 @@ T = [['.....',
          '.....']]
 
 formas = [S, Z, I, O, J, L, T]
-formas_cores = [cores['VD'], cores['VM'], cores['C'], cores['AM'], cores['L'], cores['AZ'], cores['R']]
+cores_formas = [cores['VD'], cores['VM'], cores['C'], cores['AM'], cores['L'], cores['AZ'], cores['R']]
+
+
+class Peça:
+    def inicio (self,x,y,forma):
+        self.x = x
+        self.y = y 
+        self.forma = forma
+        self.cores = cores_formas[formas.index(forma)] #Acha a posição da forma escolhida na lista de formas e passa para a lista com as cores das formas
+        self.rotação = 0 #Posição inicial da forma, que consegue ser rotacionada posteriormente
 
 FPS = 15
 
