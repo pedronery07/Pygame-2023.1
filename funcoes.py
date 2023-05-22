@@ -1,7 +1,7 @@
 import pygame
 import time
 import random
-from config import WIDTH, HEIGHT, cores, background_color, title_font, txt_font, formas,topo_esquerdo_x,topo_esquerdo_y,play_height,play_width,tam_bloco, Peça 
+from config import WIDTH, HEIGHT, cores, background_color, title_font, txt_font, formas,topo_esquerdo_x,topo_esquerdo_y,play_height,play_width,tam_bloco, Peça, s_height, s_width 
 from assets import theme_song
 
 gameDisplay = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -128,10 +128,21 @@ def principal():
                         peça.x += 1
                 if e.key == pygame.K_RIGHT:
                     peça.x += 1
-                    if not (valida_posicao()):
+                    if not (valida_posicao(peça,grid)):
                         peça.x -= 1
                 if e.key == pygame.K_DOWN:
                     peça.y -= 1
+                    if not (valida_posicao(peça,grid)):
+                        peça.y += 1
                 if e.key == pygame.K_UP:
                     peça.rotação += 1
+                    if not(valida_posicao(peça,grid)):
+                        peça -= 1
+        desenha_janela(win,grid)              
 
+
+def menu_principal(win):
+    principal(win)
+win = pygame.display.set_mode((s_width, s_height))
+pygame.display.set_caption('Tetris')
+menu_principal(win)
