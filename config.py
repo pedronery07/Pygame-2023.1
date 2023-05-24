@@ -124,7 +124,7 @@ formas = [S, Z, I, O, J, L, T]
 cores_formas = [cores['VD'], cores['VM'], cores['C'], cores['AM'], cores['L'], cores['AZ'], cores['R']]
 
 
-class Peça:
+class Peça(object):
     def inicio (self,x,y,forma):
         self.x = x
         self.y = y 

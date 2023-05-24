@@ -1,10 +1,19 @@
 import pygame
 import time
 import random
-from config import WIDTH, HEIGHT, cores, background_color, title_font, txt_font, formas,topo_esquerdo_x,topo_esquerdo_y,play_height,play_width,tam_bloco, Peça, s_height, s_width 
+from config import WIDTH, HEIGHT, cores, background_color, title_font, txt_font, formas,topo_esquerdo_x,topo_esquerdo_y,play_height,play_width,tam_bloco, s_height, s_width,cores_formas
 from assets import theme_song
 
 gameDisplay = pygame.display.set_mode((WIDTH, HEIGHT))
+
+# Classe
+class Peça:
+    def __init__ (self,x,y,forma):
+        self.x = x
+        self.y = y 
+        self.forma = forma
+        self.cores = cores_formas[formas.index(forma)] #Acha a posição da forma escolhida na lista de formas e passa para a lista com as cores das formas
+        self.rotação = 0 #Posição inicial da forma, que consegue ser rotacionada posteriormente
 
 #Funções para colocar texto na tela
 def text_objects(text,color,size):
@@ -76,8 +85,7 @@ def cria_grid(posicao_fixa = {}):
     return grid
 
 def seleciona_forma():
-    escolha = Peça(5,0,random.choice(formas))
-    return escolha
+    return Peça(5,0,random.choice(formas))
 
 def desenha_grid(superficie, grid):
     x0 = topo_esquerdo_x
@@ -88,7 +96,7 @@ def desenha_grid(superficie, grid):
         pygame.draw.line(superficie, cores['CI'], (x0, y0+i*tam_bloco), (x0 + play_width, y0+i*tam_bloco))
         for j in range(len(grid[i])):
             #10 linhas
-            pygame.draw.line(superficie, cores['CI'], (x0 + j*tam_bloco, y0), (x0 + j*tam_bloco, y0+ play_width, play_height))
+            pygame.draw.line(superficie, cores['CI'], (x0 + j*tam_bloco, y0), (x0 + j*tam_bloco, y0+ play_width), play_height)
 
 def desenha_janela(superficie,grid):
     superficie.fill(background_color)
@@ -111,7 +119,7 @@ def desenha_janela(superficie,grid):
 
 def converte_forma(forma):
     posicoes = []
-    formato = forma.forma[forma.rotation % len(forma.forma)]
+    formato = forma.forma[forma.rotação % len(forma.forma)]
 
     for i, line in enumerate(formato):
         linha = list(line)
@@ -121,6 +129,8 @@ def converte_forma(forma):
 
     for i, pos in enumerate(posicoes):
         posicoes[i] = (pos[0] - 2, pos[1] - 4)
+
+    return posicoes
 
 def valida_posicao(forma, grid):
     pos_validas = []
@@ -153,7 +163,8 @@ def valida_posicao(forma, grid):
 
 def valida_altura(pos_validas):
     for p in pos_validas:
-        x,y = p
+        x = p
+        y = p
         if y < 1:
             return True
         else:
@@ -204,7 +215,7 @@ def principal():
                 if e.key == pygame.K_UP:
                     peça.rotação += 1
                     if not(valida_posicao(peça,grid)):
-                        peça -= 1
+                        peça.rotação -= 1
         
                 
         forma_pos = converte_forma(peça)
@@ -212,12 +223,12 @@ def principal():
         for i in range(len(forma_pos)):
             x, y = forma_pos[i]
             if y > -1:
-                grid[y][x] = peça.color
+                grid[y][x] = peça.cores
         
         if muda_peça:
             for pos in forma_pos:
                 p = (pos[0], pos[1])
-                posicao_fixa[p] = peça.color
+                posicao_fixa[p] = peça.cores
             peça = proxima_peça
             proxima_peça = seleciona_forma
             muda_peça = False
@@ -226,11 +237,8 @@ def principal():
 
         if valida_altura(posicao_fixa):
             jogo_aberto = False
-    
     pygame.display.quit()
 
-def menu_principal(win):
-    principal(win)
 win = pygame.display.set_mode((s_width, s_height))
 pygame.display.set_caption('Tetris')
-menu_principal(win)
+principal()
