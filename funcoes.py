@@ -233,9 +233,9 @@ def principal():
 
         desenha_janela(win,grid)
 
-        if valida_altura(posicao_fixa):
-            jogo_aberto = False
-    pygame.display.quit()
+#        if valida_altura(posicao_fixa):
+#            jogo_aberto = False
+#    pygame.display.quit()
 
 win = pygame.display.set_mode((s_width, s_height))
 pygame.display.set_caption('Tetris')

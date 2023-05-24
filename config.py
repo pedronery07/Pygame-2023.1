@@ -129,7 +129,7 @@ FPS = 15
 WIDTH = 1200
 HEIGHT = 750
 s_width = 800
-s_height = 600
+s_height = 700
 play_width = 300 #300 // 10 => 30 width por bloco
 play_height = 600 #500 // 20 => 30 height por bloco
 tam_bloco = 30
