@@ -161,14 +161,12 @@ def valida_posicao(forma, grid):
     
     return True
 
-def valida_altura(pos_validas):
-    for p in pos_validas:
-        x = p
-        y = p
+def valida_altura(posicao_fixa):
+    for pos in posicao_fixa:
+        x, y = pos
         if y < 1:
             return True
-        else:
-            return False
+    return False
 
 def principal():
 
@@ -224,13 +222,13 @@ def principal():
             x, y = forma_pos[i]
             if y > -1:
                 grid[y][x] = peça.cores
-        
+
         if muda_peça:
             for pos in forma_pos:
                 p = (pos[0], pos[1])
                 posicao_fixa[p] = peça.cores
             peça = proxima_peça
-            proxima_peça = seleciona_forma
+            proxima_peça = seleciona_forma()
             muda_peça = False
 
         desenha_janela(win,grid)
