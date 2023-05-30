@@ -1,17 +1,17 @@
 import random
 import pygame
-from config import WIDTH, HEIGHT, METEOR_WIDTH, METEOR_HEIGHT, SHIP_WIDTH, SHIP_HEIGHT,MOEDA_WIDTH,MOEDA_HEIGHT
-from assets import SHIP_IMG, PEW_SOUND, METEOR_IMG, BULLET_IMG, EXPLOSION_ANIM,MOEDA
+from config import WIDTH, HEIGHT, METEOR_WIDTH, METEOR_HEIGHT, PERSONAGEM_WIDTH, PERSONAGEM_HEIGHT,MOEDA_WIDTH,MOEDA_HEIGHT
+from assets import PERSONAGEM_IMG, METEOR_IMG, EXPLOSION_ANIM,MOEDA
 
 MOEDA_WIDTH = 50
 MOEDA_HEIGHT = 38
 
-class Ship(pygame.sprite.Sprite):
+class Personagem(pygame.sprite.Sprite):
     def __init__(self, groups, assets):
         # Construtor da classe mãe (Sprite).
         pygame.sprite.Sprite.__init__(self)
 
-        self.image = assets[SHIP_IMG]
+        self.image = assets[PERSONAGEM_IMG]
         self.mask = pygame.mask.from_surface(self.image)
         self.rect = self.image.get_rect()
         self.rect.centerx = WIDTH / 2
@@ -33,22 +33,6 @@ class Ship(pygame.sprite.Sprite):
             self.rect.right = WIDTH
         if self.rect.left < 0:
             self.rect.left = 0
-
-    def shoot(self):
-        # Verifica se pode atirar
-        now = pygame.time.get_ticks()
-        # Verifica quantos ticks se passaram desde o último tiro.
-        elapsed_ticks = now - self.last_shot
-
-        # Se já pode atirar novamente...
-        if elapsed_ticks > self.shoot_ticks:
-            # Marca o tick da nova imagem.
-            self.last_shot = now
-            # A nova bala vai ser criada logo acima e no centro horizontal da nave
-            new_bullet = Bullet(self.assets, self.rect.top, self.rect.centerx)
-            self.groups['all_sprites'].add(new_bullet)
-            self.groups['all_bullets'].add(new_bullet)
-            self.assets[PEW_SOUND].play()
 
 class Meteor(pygame.sprite.Sprite):
     def __init__(self, assets):
@@ -99,30 +83,6 @@ class Moeda(pygame.sprite.Sprite):
             self.rect.y = random.randint(-100, -MOEDA_HEIGHT)
             self.speedx = 0 # Velocidade horizontal fixa
             self.speedy = random.randint(2, 9)
-
-# Classe Bullet que representa os tiros
-class Bullet(pygame.sprite.Sprite):
-    # Construtor da classe.
-    def __init__(self, assets, bottom, centerx):
-        # Construtor da classe mãe (Sprite).
-        pygame.sprite.Sprite.__init__(self)
-
-        self.image = assets[BULLET_IMG]
-        self.mask = pygame.mask.from_surface(self.image)
-        self.rect = self.image.get_rect()
-
-        # Coloca no lugar inicial definido em x, y do constutor
-        self.rect.centerx = centerx
-        self.rect.bottom = bottom
-        self.speedy = -10  # Velocidade fixa para cima
-
-    def update(self):
-        # A bala só se move no eixo y
-        self.rect.y += self.speedy
-
-        # Se o tiro passar do inicio da tela, morre.
-        if self.rect.bottom < 0:
-            self.kill()
 
 # Classe que representa uma explosão de meteoro
 class Explosion(pygame.sprite.Sprite):

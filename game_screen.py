@@ -1,7 +1,7 @@
 import pygame
 from config import FPS, WIDTH, HEIGHT, BLACK, YELLOW, RED
-from assets import load_assets, DESTROY_SOUND, BOOM_SOUND, BACKGROUND, SCORE_FONT,MOEDA_COLETADA
-from sprites import Ship, Meteor, Bullet, Explosion,Moeda
+from assets import load_assets, BOOM_SOUND, BACKGROUND, SCORE_FONT,MOEDA_COLETADA
+from sprites import Personagem, Meteor, Explosion, Moeda
 
 
 def game_screen(window):
@@ -13,16 +13,14 @@ def game_screen(window):
     # Criando um grupo de meteoros
     all_sprites = pygame.sprite.Group()
     all_meteors = pygame.sprite.Group()
-    all_bullets = pygame.sprite.Group()
     all_coins = pygame.sprite.Group()
     groups = {}
     groups['all_sprites'] = all_sprites
     groups['all_meteors'] = all_meteors
-    groups['all_bullets'] = all_bullets
     groups['all coins'] = all_coins
 
     # Criando o jogador
-    player = Ship(groups, assets)
+    player = Personagem(groups, assets)
     all_sprites.add(player)
     # Criando os meteoros
     for i in range(8):
@@ -116,11 +114,11 @@ def game_screen(window):
                     state = DONE
                 else:
                     state = PLAYING
-                    player = Ship(groups, assets)
+                    player = Personagem(groups, assets)
                     all_sprites.add(player)
 
         # ----- Gera saídas
-        window.fill(BLACK)  # Preenche com a cor branca
+        window.fill(BLACK)  # Preenche com a cor preta
         window.blit(assets[BACKGROUND], (0, 0))
         # Desenhando meteoros
         all_sprites.draw(window)
