@@ -1,7 +1,7 @@
 import pygame
 from config import FPS, WIDTH, HEIGHT, BLACK, YELLOW, RED
-from assets import load_assets, DESTROY_SOUND, BOOM_SOUND, BACKGROUND, SCORE_FONT
-from sprites import Ship, Meteor, Bullet, Explosion
+from assets import load_assets, DESTROY_SOUND, BOOM_SOUND, BACKGROUND, SCORE_FONT,MOEDA_COLETADA
+from sprites import Ship, Meteor, Bullet, Explosion,Moeda
 
 
 def game_screen(window):
@@ -14,10 +14,12 @@ def game_screen(window):
     all_sprites = pygame.sprite.Group()
     all_meteors = pygame.sprite.Group()
     all_bullets = pygame.sprite.Group()
+    all_coins = pygame.sprite.Group()
     groups = {}
     groups['all_sprites'] = all_sprites
     groups['all_meteors'] = all_meteors
     groups['all_bullets'] = all_bullets
+    groups['all coins'] = all_coins
 
     # Criando o jogador
     player = Ship(groups, assets)
@@ -28,6 +30,11 @@ def game_screen(window):
         all_sprites.add(meteor)
         all_meteors.add(meteor)
 
+    # Criando as moedas
+    for p in range(8):
+        moeda = Moeda(assets)
+        all_sprites.add(moeda)
+        all_coins.add(moeda)
     DONE = 0
     PLAYING = 1
     EXPLODING = 2
@@ -73,25 +80,23 @@ def game_screen(window):
         all_sprites.update()
 
         if state == PLAYING:
-            # Verifica se houve colisão entre tiro e meteoro
-            hits = pygame.sprite.groupcollide(all_meteors, all_bullets, True, True, pygame.sprite.collide_mask)
-            for meteor in hits: # As chaves são os elementos do primeiro grupo (meteoros) que colidiram com alguma bala
-                # O meteoro e destruido e precisa ser recriado
-                assets[DESTROY_SOUND].play()
-                m = Meteor(assets)
+            # Verifica se houve colisão entre moeda e jogador
+            hits_moeda = pygame.sprite.spritecollide(player, all_coins, True, pygame.sprite.collide_mask)
+            for moeda in hits_moeda: # As chaves são os elementos do primeiro grupo (meteoros) que colidiram com alguma bala
+                # A moeda é destruida e precisa ser recriada
+                assets[MOEDA_COLETADA].play()
+                m = Moeda(assets)
                 all_sprites.add(m)
-                all_meteors.add(m)
+                all_coins.add(m)
 
-                # No lugar do meteoro antigo, adicionar uma explosão.
-                explosao = Explosion(meteor.rect.center, assets)
-                all_sprites.add(explosao)
+
 
                 # Ganhou pontos!
                 score += 100
                 if score % 1000 == 0:
                     lives += 1
 
-            # Verifica se houve colisão entre nave e meteoro
+            # Verifica se houve colisão entre jogador e meteoro
             hits = pygame.sprite.spritecollide(player, all_meteors, True, pygame.sprite.collide_mask)
             if len(hits) > 0:
                 # Toca o som da colisão

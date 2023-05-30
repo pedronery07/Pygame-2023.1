@@ -21,16 +21,15 @@ while state != QUIT:
         state = game_screen(window)
     else:
         pygame.init()
-        window = pygame.display.set_mode((500, 400))
+        window = pygame.display.set_mode((600, 700))
         pygame.display.set_caption('GAME OVER! :(')
         # ----- Inicia estruturas de dados
         game = True
         # ----- Inicia assets
         font = pygame.font.SysFont(None, 48)
-        text = font.render('GAME', True, (250, 0, 0))
-        text2 = font.render('OVER', True, (250, 0, 0))
-        text3 = font.render("Pressione qualquer tecla", True, (250, 250, 250))
-        text4 = font.render("para sair", True, (250, 250, 250))
+        text = font.render('GAME OVER', True, (250, 0, 0))
+        text2 = font.render("Pressione qualquer tecla", True, (250, 250, 250))
+        text3 = font.render("para sair", True, (250, 250, 250))
         # ===== Loop principal =====
         while game:
             # ----- Trata eventos
@@ -40,10 +39,9 @@ while state != QUIT:
                     game = False
                 # ----- Gera saída
             window.fill((0, 0, 0))  # Preenche com a cor preta
-            window.blit(text, (190, 115))
-            window.blit(text2, (195,165))
-            window.blit(text3, (50, 280))
-            window.blit(text4, (180, 320))
+            window.blit(text, (190,100))
+            window.blit(text2, (100, 350))
+            window.blit(text3, (220, 400))
             
             # ----- Atualiza estado do jogo
             pygame.display.update()  # Mostra o novo frame para o jogador
