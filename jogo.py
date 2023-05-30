@@ -11,7 +11,7 @@ pygame.mixer.init()
 
 # ----- Gera tela principal
 window = pygame.display.set_mode((WIDTH, HEIGHT))
-pygame.display.set_caption('Navinha')
+pygame.display.set_caption('Chuva do Milhão')
 
 state = INIT
 while state != QUIT:
