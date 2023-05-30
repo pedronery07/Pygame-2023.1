@@ -90,8 +90,8 @@ def game_screen(window):
 
 
                 # Ganhou pontos!
-                score += 100
-                if score % 1000 == 0:
+                score += 1
+                if score % 10 == 0:
                     lives += 1
 
             # Verifica se houve colisão entre jogador e meteoro
@@ -124,7 +124,7 @@ def game_screen(window):
         all_sprites.draw(window)
 
         # Desenhando o score
-        text_surface = assets[SCORE_FONT].render("{:08d}".format(score), True, YELLOW)
+        text_surface = assets[SCORE_FONT].render("{:04d}".format(score), True, YELLOW)
         text_rect = text_surface.get_rect()
         text_rect.midtop = (WIDTH / 2,  10)
         window.blit(text_surface, text_rect)
