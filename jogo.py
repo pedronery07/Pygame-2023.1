@@ -2,7 +2,8 @@
 # ----- Importa e inicia pacotes
 import pygame
 import random
-from config import WIDTH, HEIGHT, INIT, GAME, QUIT
+from os import path
+from config import WIDTH, HEIGHT, INIT, GAME, QUIT, IMG_DIR
 from init_screen import init_screen
 from game_screen import game_screen
 
@@ -27,9 +28,9 @@ while state != QUIT:
         game = True
         # ----- Inicia assets
         font = pygame.font.SysFont(None, 48)
-        text = font.render('GAME OVER', True, (250, 0, 0))
-        text2 = font.render("Pressione qualquer tecla", True, (250, 250, 250))
-        text3 = font.render("para sair", True, (250, 250, 250))
+        background2 = pygame.image.load(path.join(IMG_DIR, 'game_over.png')).convert()
+        text2 = font.render("Pressione qualquer tecla", True, (255, 0, 0))
+        text3 = font.render("para sair", True, (255, 0, 0))
         # ===== Loop principal =====
         while game:
             # ----- Trata eventos
@@ -38,8 +39,9 @@ while state != QUIT:
                 if event.type == pygame.QUIT:
                     game = False
                 # ----- Gera saída
-            window.fill((0, 0, 0))  # Preenche com a cor preta
-            window.blit(text, (190,100))
+            window.fill((255, 255, 255))  # Preenche com a cor branca
+            # Carrega imagem da tela final
+            window.blit(background2,(180, 100))
             window.blit(text2, (100, 350))
             window.blit(text3, (220, 400))
             

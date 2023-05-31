@@ -16,7 +16,7 @@ BOOM_SOUND = 'boom_sound'
 MOEDA = 'moeda.png'
 MOEDA = 'moeda.png'
 MOEDA_COLETADA = 'moeda_coletada.mp3'
-
+GAME_OVER = 'game_over.jpg'
 
 def load_assets():
     assets = {}
@@ -27,6 +27,7 @@ def load_assets():
     assets[METEOR_IMG] = pygame.transform.scale(assets['meteor_img'], (METEOR_WIDTH, METEOR_HEIGHT))
     assets[PERSONAGEM_IMG] = pygame.image.load(os.path.join(IMG_DIR, 'personagem.png')).convert_alpha()
     assets[PERSONAGEM_IMG] = pygame.transform.scale(assets['personagem.png'], (PERSONAGEM_WIDTH, PERSONAGEM_HEIGHT))
+    assets[GAME_OVER] = pygame.image.load(os.path.join(IMG_DIR, 'game_over.jpg')).convert_alpha()
     explosion_anim = []
     for i in range(9):
         # Os arquivos de animação são numerados de 00 a 08
