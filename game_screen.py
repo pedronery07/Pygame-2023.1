@@ -3,7 +3,7 @@ from config import FPS, WIDTH, HEIGHT, BLACK, YELLOW, RED
 from assets import load_assets, BOOM_SOUND, BACKGROUND, SCORE_FONT,MOEDA_COLETADA
 from sprites import Personagem, Meteor, Explosion, Moeda
 
-
+score = 0
 def game_screen(window):
     # Variável para o ajuste de velocidade
     clock = pygame.time.Clock()
@@ -62,8 +62,6 @@ def game_screen(window):
                         player.speedx -= 8
                     if event.key == pygame.K_RIGHT:
                         player.speedx += 8
-                    if event.key == pygame.K_SPACE:
-                        player.shoot()
                 # Verifica se soltou alguma tecla.
                 if event.type == pygame.KEYUP:
                     # Dependendo da tecla, altera a velocidade.
