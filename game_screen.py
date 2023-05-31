@@ -62,8 +62,6 @@ def game_screen(window):
                         player.speedx -= 8
                     if event.key == pygame.K_RIGHT:
                         player.speedx += 8
-                    if event.key == pygame.K_SPACE:
-                        player.shoot()
                 # Verifica se soltou alguma tecla.
                 if event.type == pygame.KEYUP:
                     # Dependendo da tecla, altera a velocidade.

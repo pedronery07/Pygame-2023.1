@@ -32,7 +32,7 @@ while state != QUIT:
         text2 = font.render("Pressione qualquer tecla", True, (255, 0, 0))
         text3 = font.render("para sair", True, (255, 0, 0))
         # ===== Loop principal =====
-        while game:
+        while game: 
             # ----- Trata eventos
             for event in pygame.event.get():
                 # ----- Verifica consequências
