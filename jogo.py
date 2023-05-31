@@ -29,8 +29,9 @@ while state != QUIT:
         # ----- Inicia assets
         font = pygame.font.SysFont(None, 48)
         background2 = pygame.image.load(path.join(IMG_DIR, 'game_over.png')).convert()
-        text2 = font.render("Pressione qualquer tecla", True, (255, 0, 0))
-        text3 = font.render("para sair", True, (255, 0, 0))
+        text1 = font.render("Pressione qualquer tecla", True, (255, 0, 0))
+        text2 = font.render("para sair", True, (255, 0, 0))
+        text3 = font.render("Pontução: Acho q vc foi bem LMAO", True,(0,255,0))
         # ===== Loop principal =====
         while game:
             # ----- Trata eventos
@@ -42,9 +43,9 @@ while state != QUIT:
             window.fill((255, 255, 255))  # Preenche com a cor branca
             # Carrega imagem da tela final
             window.blit(background2,(180, 100))
-            window.blit(text2, (100, 350))
-            window.blit(text3, (220, 400))
-            
+            window.blit(text1, (100, 350))
+            window.blit(text2, (220, 400))
+            window.blit(text3, (20,500))
             # ----- Atualiza estado do jogo
             pygame.display.update()  # Mostra o novo frame para o jogador
             
